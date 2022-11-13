@@ -4,11 +4,6 @@ import Title from '../Title/Title';
 import Button from '../Button/Button';
 
 export default function Form({ onSubmit }) {
-  // state = {
-  //   name: '',
-  //   number: '',
-  // };
-
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -29,15 +24,12 @@ export default function Form({ onSubmit }) {
   const contact = { name, number };
 
   const handleSubmit = e => {
-    // const onSubmit = this.props;
-
     e.preventDefault();
     onSubmit(contact);
     reset();
   };
 
   const reset = () => {
-    // this.setState({ name: '', number: '' });
     setName('');
     setNumber('');
   };
