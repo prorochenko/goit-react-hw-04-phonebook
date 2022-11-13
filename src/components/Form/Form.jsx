@@ -1,47 +1,57 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { InputName, InputNumber } from '../Input/input';
 import Title from '../Title/Title';
 import Button from '../Button/Button';
 
-export default class Form extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export default function Form({ onSubmit }) {
+  // state = {
+  //   name: '',
+  //   number: '',
+  // };
 
-  handleInputChane = event => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleInputChane = event => {
     const { name, value } = event.currentTarget;
-    this.setState({
-      [name]: value,
-    });
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
+    }
   };
 
-  handleSubmit = e => {
+  const contact = { name, number };
+
+  const handleSubmit = e => {
+    // const onSubmit = this.props;
+
     e.preventDefault();
-    console.log(this.state);
-    this.props.onSubmit(this.state);
-    this.reset();
+    onSubmit(contact);
+    reset();
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+  const reset = () => {
+    // this.setState({ name: '', number: '' });
+    setName('');
+    setNumber('');
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <Title title="Name">
-          <InputName name={this.state.name} onChange={this.handleInputChane} />
-        </Title>
+  return (
+    <form onSubmit={handleSubmit}>
+      <Title title="Name">
+        <InputName name={name} onChange={handleInputChane} />
+      </Title>
 
-        <Title title="Number">
-          <InputNumber
-            number={this.state.number}
-            onChange={this.handleInputChane}
-          />
-        </Title>
-        <Button title="Add contact" />
-      </form>
-    );
-  }
+      <Title title="Number">
+        <InputNumber number={number} onChange={handleInputChane} />
+      </Title>
+      <Button title="Add contact" />
+    </form>
+  );
 }
